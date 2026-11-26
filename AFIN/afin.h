@@ -10,11 +10,10 @@ class afin{
     afin(string dic){
       m_dic=dic;
       MOD=dic.size();
-      int b=rand()+100;
-      ll a;
-      while (gcd(dic.size(),b)!=1){
-        a=rand();
-      }
+      b=rand()%MOD;
+      do {
+        a=rand()%MOD;
+      } while (gcd(MOD,a)!=1);
     }
     string encriptar(string mns){
       string enc;
@@ -28,7 +27,7 @@ class afin{
       string mns;
       for (int i=0;i<enc.size();i++){
         int aux=m_dic.find(enc[i]);
-        mns.push_back(m_dic[((aux-b)%MOD)*inv(a,MOD)]);
+        mns.push_back(m_dic[mod(mod(aux-b,MOD)*inv(a,MOD),MOD)]);
       }
       return mns;
     }
