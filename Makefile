@@ -8,10 +8,10 @@ NTL_PREFIX ?=
 NTL_CFLAGS := $(if $(NTL_PREFIX),-I$(NTL_PREFIX)/include)
 NTL_LIBS   := $(if $(NTL_PREFIX),-L$(NTL_PREFIX)/lib) -lntl -lgmp -pthread
 
-CLASSIC := cesar cesar1 control enigma ruta vaya protocolo2
+CLASSIC := afin cesar cesar1 control enigma ruta vaya protocolo2
 BIGNUM  := rsa elgamal
 
-.PHONY: all classic bignum clean
+.PHONY: all classic bignum test test-classic test-bignum clean
 all: classic bignum
 classic: $(addprefix $(BUILD)/,$(CLASSIC))
 bignum:  $(addprefix $(BUILD)/,$(BIGNUM))
@@ -19,7 +19,6 @@ bignum:  $(addprefix $(BUILD)/,$(BIGNUM))
 $(BUILD):
 	mkdir -p $@
 
-# Not in `all`: the affine-cipher draft compiles but its constructor never returns.
 # AFIN/afin.h needs gcd() and inv(); the only mate.h that defines them is Control's.
 $(BUILD)/afin: AFIN/main.cc AFIN/afin.h Control/mate.h | $(BUILD)
 	$(CXX) $(CXXFLAGS) -IControl -o $@ $<
@@ -42,6 +41,22 @@ $(BUILD)/rsa: RSA/main.cc $(wildcard RSA/*.h) | $(BUILD)
 	$(CXX) $(CXXFLAGS) $(NTL_CFLAGS) -o $@ $< $(NTL_LIBS)
 $(BUILD)/elgamal: GAMAL/main.cc $(wildcard GAMAL/*.h) | $(BUILD)
 	$(CXX) $(CXXFLAGS) $(NTL_CFLAGS) -o $@ $< $(NTL_LIBS)
+
+# Tests.  `make test-classic` needs only g++; `make test-bignum` needs NTL.
+UNIT := cesar cesar1 transposition afin enigma control
+UNIT_BINS := $(addprefix $(BUILD)/tests/test_,$(UNIT))
+
+$(BUILD)/tests:
+	mkdir -p $@
+$(BUILD)/tests/test_%: tests/unit/test_%.cc tests/unit/check.h | $(BUILD)/tests
+	$(CXX) $(CXXFLAGS) -o $@ $<
+
+test: test-classic test-bignum
+test-classic: classic $(UNIT_BINS)
+	@for t in $(UNIT_BINS); do $$t > $$t.log || { cat $$t.log; exit 1; }; tail -1 $$t.log; done
+	tests/run_golden.sh
+test-bignum: bignum
+	tests/bignum_roundtrip.sh
 
 clean:
 	rm -rf $(BUILD)
