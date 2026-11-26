@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <cstring>
+#include <limits>
 #include "mate.h"
 #include "cesar.h"
 #include "vaya.h"
@@ -37,13 +38,25 @@ int main(){
       cout << enc << endl;
     }
     if (i==2){
+      // Decrypt with the same key the message was encrypted with: the
+      // key string and number give the affine pair (a, b) and the size
+      // of the rail fence and route grids.
+      string sdic;
+      ll sc;
+      cout << "a - b\n";
+      cin >> sdic >> sc;
+      arv K(sdic,sc);
+      // The ciphertext alphabet contains ' ', so the ciphertext is read
+      // as a whole line, and its length (before padding removal) after it.
       int tam;
       string enc;
-      cin >> enc >> tam;
+      cin.ignore(numeric_limits<streamsize>::max(),'\n');
+      getline(cin,enc);
+      cin >> tam;
       string des;
-      vaya Vaya(dic,8);
-      ruta Ruta(dic,8);
-      des=A.desencriptar(enc);
+      vaya Vaya(dic,sc);
+      ruta Ruta(dic,sc);
+      des=K.desencriptar(enc);
       des=Ruta.desencriptar(des);
       for (i=des.size();i!=tam;i=des.size()){
         des.erase(des.begin()+i-1);
