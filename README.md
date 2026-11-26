@@ -141,7 +141,7 @@ RSA/  GAMAL/            RSA and ElGamal on NTL, with number-theory helpers
 Protocolo.2/            decrypts a hard-coded rail fence + route ciphertext
 FDigital/  Protocolo/   unfinished drafts (digital signature, full protocol)
 Alogrithms/ RandLFSR/ Practica/   fragments, not built
-Documentos/             course slides
+Documentos/             our course presentation (slides + RSA notes)
 tests/                  unit, golden and NTL round-trip tests
 ```
 
@@ -169,7 +169,9 @@ tests/                  unit, golden and NTL round-trip tests
 Coursework for an abstract algebra / discrete mathematics course at a
 university, 2016. Folder names and identifiers are the original Spanish ones;
 several folders are successive versions of the same assignment.
-`Documentos/` holds the course slides on classical cryptography and RSA.
+`Documentos/` holds the presentation we gave for this course:
+[`Criptografía tradicional.pptx`](Documentos/Criptograf%C3%ADa%20tradicional.pptx)
+(classical ciphers) and [`RSA.pdf`](Documentos/RSA.pdf) (the RSA scheme implemented here).
 
 ## License
 
