@@ -52,11 +52,11 @@ int main(){
   int decision;
   while (true){
     cout << "encriptar-desencriptar" << endl;
-    cin >> decision;
+    if (!(cin >> decision)) break;  // stop at end of input
     if (decision==1){
       ZZ e1,e2,p;
       cin >> e1 >> e2 >> p;
-      string mensaje=leer("mensaje.txt");
+      string mensaje=leer("Mensaje.txt");
       string encriptar=A.encriptar(mensaje,e1,e2,p);// << endl;
       copiar("encriptado.txt",encriptar);
       cout << encriptar << endl;
