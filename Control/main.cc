@@ -52,7 +52,7 @@ int main(){
       cout << des << endl;
     }
     cout << "1=encriptar\n2=desencriptar\n";
-    cin >> i;
+    if (!(cin >> i)) break;  // stop at end of input
   }
   return 0;
 }
