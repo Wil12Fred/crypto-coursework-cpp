@@ -7,7 +7,7 @@
 using namespace std;
 
 int main (){
-  string dic="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWZYZ\n";
+  string dic="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ\n";
   cout << "introduzca clave" << endl;
   int clave;
   cin >> clave;
