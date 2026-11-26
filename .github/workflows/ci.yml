@@ -14,9 +14,10 @@ jobs:
       - name: Drafts still do not compile (documented in README)
         run: |
           for d in FDigital Protocolo; do
-            if g++ -std=c++17 -fsyntax-only -I$d $d/main.cc 2>/dev/null; then
+            if g++ -std=c++17 -fsyntax-only -I$d $d/main.cc 2> $d.err; then
               echo "::warning::$d/main.cc now compiles; update README"
             else
-              echo "$d: does not compile (expected)"
+              echo "$d: does not compile (expected); first error:"
+              grep -m1 'error' $d.err
             fi
           done
