@@ -1,4 +1,6 @@
-# Álgebra Abstracta / Discretas III — cryptography exercises
+# crypto-coursework-cpp
+
+> Álgebra Abstracta / Discretas III — cryptography exercises
 
 C++ coursework from *Abstract Algebra* (Matemática Discreta III, UCSP, 2016):
 classical ciphers, an Enigma simulator, and public-key cryptography (RSA,
