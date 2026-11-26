@@ -39,7 +39,7 @@ string encriptar (string ct){
     char b = rotors[1][mod(dic.find(a)+ M - R)];//M->clave key[1]
     char c = rotors[0][mod(dic.find(b)+ L - M)];//L->clave key[0]
     // Pass through reflector
-    char ref = reflector[mod(dic.find(c))-L];
+    char ref = reflector[mod(dic.find(c) - L)];
     int pos=dic.find(ref);
     // Inverse rotor pass
     int d = mod(rotors[0].find(dic[mod(pos + L)]) - L);
