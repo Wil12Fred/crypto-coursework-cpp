@@ -1,15 +1,22 @@
-name: build
+name: CI
 on: [push, pull_request]
 jobs:
-  build:
+  build-and-test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: sudo apt-get update && sudo apt-get install -y libntl-dev libgmp-dev
-      - run: make -j4
-      - name: smoke-run
+      - name: Install NTL and GMP
+        run: sudo apt-get update && sudo apt-get install -y libntl-dev libgmp-dev
+      - name: Build
+        run: make -j4
+      - name: Test (unit + golden + RSA/ElGamal round trips)
+        run: make test
+      - name: Drafts still do not compile (documented in README)
         run: |
-          echo 4 holamundo | build/ruta
-          echo 3 holamundo | build/vaya
-          build/enigma
-          printf '0\n' | (cd RSA && ../build/rsa)
+          for d in FDigital Protocolo; do
+            if g++ -std=c++17 -fsyntax-only -I$d $d/main.cc 2>/dev/null; then
+              echo "::warning::$d/main.cc now compiles; update README"
+            else
+              echo "$d: does not compile (expected)"
+            fi
+          done
