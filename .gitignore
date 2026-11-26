@@ -1,0 +1,9 @@
+build/
+*.o
+a.out
+/*/main
+*.dSYM/
+.DS_Store
+*.swp
+.idea/
+.vscode/
